@@ -11,9 +11,10 @@ const ContactForm = ({ onAdd }) => {
       .max(50, 'Too Long!')
       .required('Required'),
     number: Yup.string()
-      .min(3, 'Too Short!')
-      .max(50, 'Too Long!')
-      .required('Required'),
+      .min(7, 'Too Short!')
+      .max(7, 'Too Long!')
+      .required('Required')
+      .matches(/^\d+$/, 'Number is not valid'),
   });
 
   const handleSubmit = (values, actions) => {

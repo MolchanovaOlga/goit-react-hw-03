@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 
 import './App.css';
 
@@ -13,9 +13,17 @@ const dataArr = [
   { id: 'id-4', name: 'Annie Copeland', number: '227-91-26' },
 ];
 
+const key = 'currentContacts';
+
 function App() {
-  const [contacts, setContacts] = useState(dataArr);
   const [inputFilterVal, setimputFilterVal] = useState('');
+  const [contacts, setContacts] = useState(() => {
+    const dataFromLS = localStorage.getItem(key);
+    if (!dataFromLS) {
+      return [];
+    }
+    return JSON.parse(dataFromLS);
+  });
 
   const arrFilterContacts = contacts.filter(contact =>
     contact.name.toLowerCase().includes(inputFilterVal.toLowerCase().trim())
@@ -34,6 +42,10 @@ function App() {
   const handleDeleteContact = idContact => {
     setContacts(contacts.filter(contact => contact.id !== idContact));
   };
+
+  useEffect(() => {
+    localStorage.setItem(key, JSON.stringify(contacts));
+  }, [contacts]);
 
   return (
     <>
