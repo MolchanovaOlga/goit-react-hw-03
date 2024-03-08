@@ -3,9 +3,9 @@ import { MdPhone } from 'react-icons/md';
 
 import css from './Contact.module.css';
 
-const Contact = ({ name, phone }) => {
+const Contact = ({ name, phone, id, handleDelete }) => {
   return (
-    <li className={css.item}>
+    <>
       <div className={css.container}>
         <p className={css.text}>
           <MdPerson className={css.icon} />
@@ -16,8 +16,15 @@ const Contact = ({ name, phone }) => {
           {phone}
         </p>
       </div>
-      <button type="button">Delete</button>
-    </li>
+      <button
+        type="button"
+        onClick={() => {
+          handleDelete(id);
+        }}
+      >
+        Delete
+      </button>
+    </>
   );
 };
 

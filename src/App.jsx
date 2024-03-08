@@ -1,10 +1,10 @@
 import { useState } from 'react';
-import { nanoid } from 'nanoid';
 
 import './App.css';
 
 import SearchBox from './components/SearchBox/SearchBox';
 import ContactList from './components/ContactList/ContactList';
+import ContactForm from './components/ContactForm/ContactForm';
 
 const dataArr = [
   { id: 'id-1', name: 'Rosie Simpson', number: '459-12-56' },
@@ -25,15 +25,29 @@ function App() {
     setimputFilterVal(ev.target.value);
   };
 
+  const addContact = newContact => {
+    setContacts(prevContacts => {
+      return [...prevContacts, newContact];
+    });
+  };
+
+  const handleDeleteContact = idContact => {
+    setContacts(contacts.filter(contact => contact.id !== idContact));
+  };
+
   return (
     <>
       <div>
-        <h1>Phonebook</h1>
+        <h1 className="title">Phonebook</h1>
+        <ContactForm onAdd={addContact} />
         <SearchBox
           imputFilterVal={inputFilterVal}
           handleImputFilterVal={handleImputFilterVal}
         />
-        <ContactList contacts={arrFilterContacts} />
+        <ContactList
+          contacts={arrFilterContacts}
+          handleDelete={handleDeleteContact}
+        />
       </div>
     </>
   );
